@@ -52,7 +52,7 @@ queue_lock = threading.Lock()  # 队列访问锁
 chat_contexts = {}  # 存储上下文
 
 # 读取 prompt.md 文件内容
-with open(os.path.join(root_dir, 'prompt.md'), 'r', encoding='utf-8') as file:
+with open(os.path.join(get_exe_path(), 'prompt.md'), 'r', encoding='utf-8') as file:
     prompt_content = file.read()
 
 # 配置日志
