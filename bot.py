@@ -3,17 +3,33 @@ from datetime import datetime
 import threading
 import time
 import os
+import sys
+import json
 from database import Session, ChatMessage
-from config import DEEPSEEK_API_KEY, MAX_TOKEN, TEMPERATURE, MODEL, DEEPSEEK_BASE_URL,LISTEN_LIST
+# from config import DEEPSEEK_API_KEY, MAX_TOKEN, TEMPERATURE, MODEL, DEEPSEEK_BASE_URL,LISTEN_LIST
 from wxauto import WeChat
 from openai import OpenAI
 
 
 # 获取微信窗口对象
 wx = WeChat()
+# 获取程序根目录
+# root_dir = os.path.dirname(os.path.abspath(__file__))
+def get_exe_path():
+    """获取可执行文件的当前目录"""
+    if getattr(sys, 'frozen', False):
+        # 打包后的exe运行时，sys.frozen为True
+        return os.path.dirname(sys.executable)
+    else:
+        return os.path.dirname(os.path.abspath(__file__))
+
+config_path = os.path.join(get_exe_path(), 'config.json')
+
+with open(config_path, 'r', encoding='utf-8') as config_file:
+    config_data = json.load(config_file)
 
 # 设置监听列表
-listen_list = LISTEN_LIST
+listen_list = config_data.get("LISTEN_LIST")
 
 # 循环添加监听对象
 for i in listen_list:
@@ -24,12 +40,11 @@ wait = 1  # 设置1秒查看一次是否有新消息
 
 # 初始化OpenAI客户端（替换原有requests方式）
 client = OpenAI(
-    api_key=DEEPSEEK_API_KEY,
-    base_url=DEEPSEEK_BASE_URL
+    api_key=config_data.get("DEEPSEEK_API_KEY"),
+    base_url=config_data.get("DEEPSEEK_BASE_URL")
 )
 
-# 获取程序根目录
-root_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 # 新增全局变量
 user_queues = {}  # 用户消息队列管理
@@ -85,13 +100,13 @@ def get_deepseek_response(message, user_id):
         # 使用OpenAI SDK构造请求
         print(f"API 请求 URL: {client._client._base_url}")
         response = client.chat.completions.create(
-            model=MODEL,
+            model=config_data.get("MODEL"),
             messages=[
                 {"role": "system", "content": prompt_content},
                 *chat_contexts[user_id][-MAX_GROUPS * 2:]
             ],
-            temperature=TEMPERATURE,
-            max_tokens=MAX_TOKEN,
+            temperature=config_data.get("TEMPERATURE"),
+            max_tokens=config_data.get("MAX_TOKEN"),
             stream=False  # 非流式响应
         )
 

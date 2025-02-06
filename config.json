@@ -1,0 +1,12 @@
+{
+    "listen_list": [
+        "和bot说话的账号的备注"
+    ],
+    "deepseek_api_key": "sk-",
+    "deepseek_base_url": "https://api.siliconflow.cn/v1/",
+    "alternative_deepseek_base_url": "https://api.deepseek.com",
+    "model": "deepseek-ai/DeepSeek-V3",
+    "alternative_model": "deepseek-chat",
+    "max_token": 2000,
+    "temperature": 1.3
+}
