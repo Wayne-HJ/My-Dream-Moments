@@ -7,7 +7,7 @@ import shutil
 SKIP_FILES = [
     "AutoUpdate.py",#更新脚本
     "config.py",#配置文件
-    os.path.join("prompts", "prompts/ATRI.md"),#角色文件夹
+    os.path.join("prompts", "ATRI.md"),#角色文件夹
     "custom_config.py",#自定义配置文件
     os.path.join("custom_folder", "custom_file.txt")#自定义文件夹
 ]
