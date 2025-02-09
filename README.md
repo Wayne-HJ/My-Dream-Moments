@@ -1,13 +1,13 @@
 ![ATRI.jpg](img%2FATRI.jpg)
-
+- 夸克网盘：https://pan.quark.cn/s/f37d765e1404 提取码：zXpP 推荐转存，项目更新直接下载最新的代码zip。我也能有收益，感谢您的支持！
 ---
 ## 简介
 简体中文 · [English](./README_EN.md) 
-- 项目交流Q群：715616260
-- 使用教程：[不封号！90秒让DeepSeek沉浸式接入微信变成你的Ai老婆](https://www.bilibili.com/video/BV1XCPSehEif/)
 - 已经更换了安全的微信自动化方案，即<code>wxauto</code>，封号可能性几乎没有，稳定性拉满
 - My Dream Moments 是一个基于大型语言模型（LLM）的情感陪伴程序，能够接入微信，提供更真实的情感交互体验。内置了 Atri-My dear moments 的 prompt，并且解决了传统人机对话程序一问一答的死板效果，提供沉浸式角色扮演和多轮对话支持。项目名字来源是运行在该程序上的第一个智能体的原作名称+项目价值观混合而来。
 - 推荐使用DeepSeek V3 模型。<br>
+- [赞助者名单](SponsorList.md)
+- [里程碑](MileStone.md)<br>
 ![demo.png](img%2Fdemo.png)
 ---
 ## 声明
@@ -21,17 +21,28 @@
 - [x] 多用户支持
 - [x] 由 DeepSeek R1 利用游戏文本生成的 Prompt
 - [x] 无需联网的时间感知
-
+- [x] WebUI，方便不理解代码的用户配置项目
+- [x] 图像生成
+- [x] 异步请求
+- [x] 实现群聊
+- [x] 表情包
+- [x] Ai图片识别，调用kimi
+- [x] 实现R1对话
 ---
 
 ## 待实现功能，期待您的加入
 - [ ] 定时任务与智能定时任务
 - [ ] 利用 8B 小模型实时生成记忆并定期整理，实现持久记忆
-- [ ] WebUI，方便不理解代码的用户配置项目
 - [ ] 负载均衡
 - [ ] Releases
-
+- [ ] 语音功能，只能发送wav语言文件
+- [ ] 持久化记忆，我要给她完整的一生
+- [ ] 完善WebUi
+- [ ] 数学公式或者代码实现远程渲染
+- [ ] 实现知识库
+- [ ] 实现游戏功能
 ---
+
 
 ## 如何运行项目
 
@@ -45,31 +56,42 @@
 3. **DeepSeek API Key**  
    - 推荐使用：[获取 API Key（15元免费额度）](https://cloud.siliconflow.cn/i/aQXU6eC5)
 
-4. **(可选)云电脑或Windows Server**  
-   - 因为wxauto需要前台运行，所以最好有一台云电脑或Windows Server
 ---
 
 ### 2. 部署项目
 1. **克隆本仓库**  
    ```bash
-   git clone <仓库地址>
+   git clone https://github.com/umaru-233/My-Dream-Moments.git
 2. **安装依赖**  
    ```bash
    pip install -r requirements.txt
-3. **配置<code>config.py</code>**  
+3. **安装pip** 
+   ```bash
+   python -m ensurepip
+   ```
+4. **配置<code>config.py</code>**  
 修改<code>LISTEN_LIST</code>、<code>DEEPSEEK_BASE_URL</code>和<code>DEEPSEEK_API_KEY</code>。
+
 按需调整<code>MAX_TOKEN</code>、<code>TEMPERATURE</code>和<code>MODEL</code>。如何配置请阅读<code>config.py</code>里的注释。
-4. **运行<code>bot.py</code>，如果报错请尝试使用Python 3.11版本。**
+
+5. **运行<code>bot.py</code>，如果报错请尝试使用Python 3.11版本。**
    ```bash
    python bot.py
+   ```
+
+6. FAQ:没什么问题是重启解决不了的，如果重启解决不了，请重启
+
 
 ### 3. 如何使用
+- **使用微信小号登录微信电脑版**
 - **项目运行后，控制台提示**
      ```bash
    初始化成功，获取到已登录窗口：<您的微信昵称>
    开始运行BOT...
+     ```
 即可开始监听并调用模型自动回复消息。
 ## 如果您想修改prompt
+- 建议前往官网复制各种不同Prompt，然后修改prompts/ATRI.md的内容就可以了，什么？你问我官网呢，emm，可以加qq群获取prompt
 - 项目根目录下的 <code>prompt.md</code> 可以编辑，修改后重启项目生效。
 - 注意：请不要修改与反斜线 <code> \ </code>相关的 prompt，因为它们被用于分段回复消息。
 ## 赞助

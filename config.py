@@ -1,17 +1,99 @@
-# 用户列表(请配置要和bot说话的账号的昵称，不要写备注！)
-# 例如：LISTEN_LIST = ['用户1','用户2']
-LISTEN_LIST = ['和bot说话的账号的昵称，不要写备注！保留单引号']
+import os
+import sys
+import json
+
+# 用户列表(请配置要和bot说话的账号的昵称或者群名，不要写备注！)
+# 例如：LISTEN_LIST = ['用户1','用户2','群名']
+# LISTEN_LIST = ['请配置要和bot说话的账号的昵称或者群名，不要写备注！']
+# # 机器人的微信名称，如'亚托莉'
+# ROBOT_WX_NAME = 'ATRI'
+# # DeepSeek API 配置
+# # 填你的秘钥
+# DEEPSEEK_API_KEY = 'sk-'
+# # 硅基流动API注册地址，免费15元额度 https://cloud.siliconflow.cn/i/aQXU6eC5
+# DEEPSEEK_BASE_URL = 'https://api.siliconflow.cn/v1/'
+# # 如果要使用官方的API
+# # DEEPSEEK_BASE_URL = 'https://api.deepseek.com'
+# # 如果要使用本地的ai API，把模型和API地址改成本地的
+# # DEEPSEEK_BASE_URL = 'http://127.0.0.1:8000/v1'
+# # 硅基流动API的V3模型(deepseek-ai/DeepSeek-V3)，推荐充值才能使用的那个pro，模型名字是(Pro/deepseek-ai/DeepSeek-V3),还有r1 pro 名字(deepseek-ai/DeepSeek-R1)
+# # 要切换模型请把括号里的内容复制到MODEL里
+# MODEL = 'Pro/deepseek-ai/DeepSeek-V3'
+# # 官方API的V3模型
+# # MODEL = 'deepseek-chat'
+# # 回复最大token
+# MAX_TOKEN = 2000
+# #温度
+# TEMPERATURE = 1.3
+#
+# # Moonshot AI配置（用于图片识别）
+# # API申请https://platform.moonshot.cn/console/api-keys （免费15元额度）
+# MOONSHOT_API_KEY = 'sk-'
+# MOONSHOT_BASE_URL = "https://api.moonshot.cn/v1"
+# MOONSHOT_TEMPERATURE = 0.3
+#
+# #图像生成(默认使用 deepseek-ai/Janus-Pro-7B 模型)
+# IMAGE_MODEL = 'deepseek-ai/Janus-Pro-7B'
+# TEMP_IMAGE_DIR = 'temp_images'
+# #最大的上下文轮数
+# MAX_GROUPS = 15
+# #prompt文件名
+# PROMPT_NAME = 'ATRI.md'
+# #表情包存放目录
+# EMOJI_DIR = 'emojis'
+
+#语音配置（请配置自己的tts服务，用GPT-SoVITS-Inference和自己训练的语音模型，不会去b站上搜索）
+# TTS_API_URL = 'http://127.0.0.1:5000/tts'
+# VOICE_DIR = 'voices'  # 语音文件临时存储目录
+
+def get_exe_path():
+    """获取可执行文件的当前目录"""
+    if getattr(sys, 'frozen', False):
+        # 打包后的exe运行时，sys.frozen为True
+        return os.path.dirname(sys.executable)
+    else:
+        return os.path.dirname(os.path.abspath(__file__))
+# 获取程序根目录
+root_dir = get_exe_path()
+config_path = os.path.join(root_dir, 'config.json')
+
+with open(config_path, 'r', encoding='utf-8') as config_file:
+    config_data = json.load(config_file)
+
+# 用户列表(请配置要和bot说话的账号的备注！)
+# 例如：LISTEN_LIST = ['用户1','用户2','群名']
+# LISTEN_LIST = ['请配置要和bot说话的账号的备注！']
+LISTEN_LIST = config_data.get("LISTEN_LIST")
+# 机器人的微信名称，如'亚托莉'
+ROBOT_WX_NAME = config_data.get("ROBOT_WX_NAME")
 # DeepSeek API 配置
-DEEPSEEK_API_KEY = 'sk-'
-# 硅基流动API注册地址，免费15元额度 https://cloud.siliconflow.cn/i/aQXU6eC5
-DEEPSEEK_BASE_URL = 'https://api.siliconflow.cn/v1/'
+# 填你的秘钥
+DEEPSEEK_API_KEY = config_data.get("DEEPSEEK_API_KEY")
 # 如果要使用官方的API
-# DEEPSEEK_BASE_URL = 'https://api.deepseek.com'
-# 硅基流动API的V3模型
-MODEL = 'deepseek-ai/DeepSeek-V3'
+DEEPSEEK_BASE_URL = config_data.get("DEEPSEEK_BASE_URL")
 # 官方API的V3模型
-# MODEL = 'deepseek-chat'
+MODEL = config_data.get("MODEL")
 # 回复最大token
-MAX_TOKEN = 2000
+MAX_TOKEN = config_data.get("MAX_TOKEN")
 #温度
-TEMPERATURE = 1.3
+TEMPERATURE = config_data.get("TEMPERATURE")
+# Moonshot AI配置（用于图片识别）
+# API申请https://platform.moonshot.cn/console/api-keys （免费15元额度）
+MOONSHOT_API_KEY = config_data.get("MOONSHOT_API_KEY")
+MOONSHOT_BASE_URL = config_data.get("MOONSHOT_BASE_URL")
+MOONSHOT_TEMPERATURE = config_data.get("MOONSHOT_TEMPERATURE")
+# 图像生成(默认使用 deepseek-ai/Janus-Pro-7B 模型)
+TEMP_IMAGE_DIR = config_data.get("TEMP_IMAGE_DIR")
+IMAGE_MODEL = config_data.get("IMAGE_MODEL")
+#prompt文件名
+PROMPT_NAME = 'prompt.md'
+#最大的上下文轮数
+MAX_GROUPS = config_data.get("MAX_GROUPS")
+#表情包存放目录
+EMOJI_DIR = config_data.get("emojis")
+#语音配置（请配置自己的tts服务，用GPT-SoVITS-Inference和自己训练的语音模型，不会去b站上搜索）
+TTS_API_URL = config_data.get("TTS_API_URL")
+VOICE_DIR = config_data.get("VOICE_DIR")
+
+
+
